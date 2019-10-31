@@ -1,0 +1,30 @@
+#container {
+    margin: 8px;
+    border: 1px solid black;
+    overflow: hidden;
+    height: 600px;
+    position: relative;
+    white-space: nowrap;
+    background: #595959;
+    /* 设置背景颜色 */
+    box-shadow: 2px 2px 5px #333;
+    /* 设置阴影 */
+}
+
+.float-word {
+    position: absolute;
+}
+
+.center {
+    text-align: center;
+    overflow: hidden;
+}
+
+.daxiao {
+    width: 500px;
+    height: 50px;
+}
+
+.hh {
+    text-align: center;
+}

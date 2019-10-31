@@ -14,7 +14,7 @@
             <span id="header-title">来杯咖啡吗??</span></h2>
     </div>
     <div class="da">
-        <div id="sidebar">
+        <div id="sidebar" id="menu-container">
             <ul>
                 <li><a href="#nt">拿铁</a></li>
                 <li><a href="#ms">美式咖啡</a></li>
@@ -73,6 +73,16 @@
     <div colspan="2" id="footer">
         版权归本人所有
     </div>
+
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(' li a').click(function() {
+                $('li a').removeClass('active');
+                $(this).addClass('active');
+            });
+        })
+    </script>
 
 </body>
 
