@@ -79,6 +79,43 @@
         ul.pagination li a:hover:not(.active) {
             background-color: #ddd;
         }
+        
+        .spinner {
+            animation: rotation 3s linear infinite;
+            width: 32px;
+            height: 32px;
+            padding: 8px;
+        }
+        
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .loading-container {
+            position: relative;
+        }
+        
+        .loading {
+            position: absolute;
+            z-index: 9999;
+            background-color: rgba(0, 0, 0, 0.2);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .loading.loading-on {
+            visibility: visible;
+        }
     </style>
 
 </head>
@@ -87,7 +124,7 @@
 
     <h2 class="text-center">商品列表</h2>
     <div class="loading-container">
-        <table id="goods" class="table">
+        <table id="goods" class="table table-striped">
             <tr>
                 <th>品名</th>
                 <th>单价</th>
@@ -95,7 +132,7 @@
             </tr>
         </table>
         <div class="loading">
-            <img alt="loading">
+            <img src="9700\images\咖啡.png" alt="loading" class="spinner">
         </div>
     </div>
     <nav>
@@ -120,15 +157,35 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         $(document).ready(function() {
-            axios.get('http://mock-api.com/mnEZQbKJ.mock/products')
-                .then(function(res) {
-                    console.log('res', res);
-                    for (var index in res.data) {
-                        $('#goods').append('<tr>' + '<td>' + res.data[index].name + '</td>' + '<td>' + res.data[index].price +
-                            '</td>' + '<td>' + res.data[index].created_at + '</td>' + '<tr>');
-                    }
-                })
+            function getProducts(page) {
 
+                axios.get('http://mock-api.com/mnEZQbKJ.mock/products')
+                    .then(function(res) {
+                        var line;
+                        var item;
+                        var header = $('#goods').find('tr').first();
+                        $('#goods').find('tr').remove();
+                        $('#goods').append(header);
+                        console.log('header', header);
+                        for (var index in res.data) {
+                            $('#goods').append('<tr>' + '<td>' + res.data[index].name + '</td>' + '<td>' + res.data[index].price +
+                                '</td>' + '<td>' + res.data[index].created_at + '</td>' + '<tr>');
+                            $('#goods').append(line);
+                        }
+                        $('.loading').removeClass('loading-on');
+                    })
+                    .catch(function(err) {
+                        console.log('err', err);
+                        $('.loading').removeClass('loading-on');
+
+                    });
+            }
+            $('goods-nav li a').click(function() {
+                console.log('page', $(this).text());
+                $('#goods-nav li a').removeClass('active');
+                $(this).addClass('active');
+                getProducts($(this).text());
+            })
         })
     </script>
 </body>

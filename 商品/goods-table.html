@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>分页器与异步加载实例</title>
+    <title>商品列表</title>
     <style>
         table {
             border-spacing: 0;
             border-collapse: collapse;
-            width: 100%;
+            width: 80%;
+            margin: 0 auto;
         }
         
         .table tr td,
@@ -22,6 +23,7 @@
         
         .pagination {
             list-style-type: none;
+            display: inline-block;
             margin: 16px 4px;
             padding: 0;
         }
@@ -32,18 +34,18 @@
         
         .pagination li a {
             display: inline-block;
-            padding: 8px;
+            padding: 4px 8px;
             border: 1px solid #ccc;
             text-decoration: none;
             color: black;
         }
         
-        .pagination li a:hover {
+        .pagination li a:hover:not(.active) {
             background-color: #f5f5f5;
         }
         
         .pagination li a.active {
-            background-color: darkcyan;
+            background-color: red;
         }
         
         .right {
@@ -73,6 +75,9 @@
         
         .loading-container {
             position: relative;
+            width: 80%;
+            height: 80%;
+            margin: 0 auto;
         }
         
         .loading {
@@ -106,13 +111,13 @@
             </tr>
         </table>
         <div class="loading">
-            <img src="./images/loading.png" alt="loading" class="spinner">
+            <img src="加载 (1).png" alt="loading" class="spinner">
 
         </div>
     </div>
     <nav>
         <ul class="pagination right" id="goods-nav">
-
+            <li><a href="#">«</a></li>
             <li>
                 <a href="javascript:void(0)" class="active">1</a>
             </li>
@@ -128,6 +133,7 @@
             <li>
                 <a href="#">5</a>
             </li>
+            <li><a href="#">»</a></li>
         </ul>
     </nav>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
@@ -136,7 +142,7 @@
         $(document).ready(function() {
             function getProducts(page) {
                 $('.loading').addClass('loading-on');
-                axios.get('http://mock-api.com/7gPXkZgl.mock/products?page=' + page)
+                axios.get('http://mock-api.com/mnEZQbKJ.mock/products?page=' + page)
                     .then(function(res) {
                         var line;
                         var item;
@@ -144,11 +150,14 @@
                         $('#goods').find('tr').remove();
                         $('#goods').append(header);
                         console.log('header:', header);
+
+                        /*调用数据*/
                         for (var index in res.data) {
                             item = res.data[index];
                             line = '<tr><td>' + item.name + '</td><td>' + item.price + '</td><td>' + item.created_at + '</td></tr>';
                             $('#goods').append(line);
                         }
+
                         $('.loading').removeClass('loading-on');
                     })
                     .catch(function(err) {
