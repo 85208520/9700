@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="bullet_screen.css">
+</head>
+
+<body>
+    <div id="container">
+
+    </div>
+
+    <div class="center">
+        发送弹幕内容： <input class="daxiao" type="b1" maxlength="32" name="b1" id="b1" placeholder=" 请输入字幕">
+    </div>
+    <div class="hh">
+        <button type="b2" value="提交" id="b2" style="height:30px;width: 100px;">发送</button>
+        <button id="b3" style="height:30px;width: 100px;">关闭弹幕</button>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var container = $('#container');
+            console.log('height', container.height());
+
+            function danmu() {
+                var text = $('#b1').val();
+
+                console.log('b1', text);
+                /*console.log() 方法用于在控文本制台输出信息*/
+                var el = $('<div class="float-word">' + text + '</div>');
+
+                var top = Math.random() * container.height();
+                /*random() 方法可返回介于 0（包含） ~ 1（不包含） 之间的一个随机数。*/
+                var elapse = Math.random() * 10000 + 5000;
+                var r = Math.random() * 256;
+                var g = Math.random() * 256;
+                var b = Math.random() * 256;
+                /*设置随机数*/
+                var fontSize = Math.random() * 10 + 20;
+                // 笔记：经过测试，弹幕div只有添加到父元素中后才会有高度，所以要到这里再设置高度防止弹幕过低超出弹幕墙下边界
+                el.css('top', top + 'px');
+                el.css('right', );
+                /*随机出现在屏幕上*/
+                el.css('color', 'rgba(' + r + ',' + g + ',' + b + ')');
+                /*设置随机颜色*/
+                el.css('font-size', fontSize + 'px');
+                /*设置字体随机大小*/
+                el.animate({
+                    right: container.width()
+                }, elapse)
+                container.append(el);
+            } /*设置动画效果*/
+
+            $('#b1').keyup(function(e) {
+                if (e.keyCode == 13) {
+                    danmu();
+                }
+            });
+            $('#b2').click(function() {
+                danmu();
+            });
+            $('#b3').click(function() {
+                $('#container').children().remove();
+            });
+        });
+    </script>
+</body>
+
+</html>
