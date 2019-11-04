@@ -1,7 +1,7 @@
-{
+ {
        "id":"2",
-       "title": "我的个人主页",
+       "title": "咖啡店",
        "cretime":"2019-11-02",
-       "content": "这是我实训课做的第一个个人主页。",
-       "img": "portfolio.png"
+       "content": "咖啡店。",
+       "img": "bg2.png"
     }
